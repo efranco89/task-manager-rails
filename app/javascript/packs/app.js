@@ -102,15 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       updateTask: function(event, id){
         event.stopImmediatePropagation();
-        let task = this.tasks.find(item => item.id == id);
-        if (task) {
-          task.name = this.task.name;
-          task.description = this.task.description;
-          task.completed = this.task.completed;
-          this.message = `Task ${id} has been updated`
-        }
-      },
-      beforeMount(){ this.listTasks() }
-    }
+        Api.updateTask(this.task).then(function(response){
+          app.listTasks();
+          app.clear();
+          app.message = `Task ${response.id} has been updated`
+        })
+      }
+    },
+    beforeMount(){ this.listTasks() }
   })
 });

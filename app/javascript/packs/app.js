@@ -93,12 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       deleteTask: function(event, id){
         event.stopImmediatePropagation();
+
         let taskIndex = this.tasks.findIndex(item => item.id == id);
         if(taskIndex > -1){
-          this.$delete(this.tasks, taskIndex);
+          Api.deleteTask(id).then(function(response){
+            app.$delete(app.tasks, taskIndex);
+            app.message = `Task ${id} has been deleted`
+          });
         }
-        this.message = `Task ${id} has been deleted`
-        console.log("task deleted")
       },
       updateTask: function(event, id){
         event.stopImmediatePropagation();

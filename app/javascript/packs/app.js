@@ -67,17 +67,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       },
       createTask: function(event){
+
         if (!this.task.completed) {
           this.task.completed = false;
         }else {
           this.task.complete = true;
         }
-        let taskId = this.nextId;
-        this.task.id = taskId;
-        let newTask = Object.assign({}, this.task);
-        this.tasks.push(newTask)
-        this.clear();
-        this.message = `Task has been created`
+
+        Api.createTask(this.task).then(function(response){
+          app.listTasks();
+          app.clear();
+          app.message = `Task ${response.id} has been created`
+        })
       },
       editTask: function(event, id){
         this.action = 'edit';
